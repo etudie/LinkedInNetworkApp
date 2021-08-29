@@ -1,0 +1,233 @@
+﻿@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] stages = { "Prospect", "Outreach", "Waiting", "Respond", "Cold" };
+}
+<script src="~/Scripts/Index.js"></script>
+
+<div class="container" ng-controller="kanbanController" ng-cloak>
+    <div class="row">
+        @{ foreach (string stage in stages)
+            {
+                string cardColor = "";
+                string textDarkLight = "white";
+                switch (stage)
+                {
+                    case "Prospect":
+                        cardColor = "info";
+                        break;
+                    case "Outreach":
+                        cardColor = "primary";
+                        break;
+                    case "Waiting":
+                        cardColor = "dark";
+                        break;
+                    case "Respond":
+                        cardColor = "success";
+                        break;
+                    case "Cold":
+                        cardColor = "secondary";
+                        break;
+
+                }
+
+                <div class="col m-3 bg-light card" id="@stage" dragula="'records-bag'">
+                    <h3 class="text-dark no-drag">@stage</h3>
+                    <div class="card text-@textDarkLight bg-@cardColor mb-1 p-0" ng-repeat="record in records | orderBy: 'priority' |filter: {'stage':'@stage'}">
+                        <div class="card-header bg-@cardColor m-0 p-0 text-center">
+                            <a title="Profile URL - {{record.platform}}" href="{{record.platformURL}}" class="btn text-white" style="font-size:smaller" target="_blank"><i class="fas fa-link"></i></a>
+                            <a class="btn text-white" style="font-size:smaller" title="details" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="info(record)"><i class="fas fa-info-circle"></i></a>
+                             <a class="btn text-white" title="edit" data-bs-toggle="modal" data-bs-target="#editModal" ng-click="edit(record)"><i class="fas fa-pen"></i></a>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="h5 card-title">{{record.name}}</div>
+                            <p class="card-subtitle">{{record.company}}</p>
+                            <p class="card-text">
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+    <!-- editModal -->
+    <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/" method="get">
+                        <div class="row mb-3">
+                            <label for="name" class="form-label col-sm-3">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="name" value="{{editRecord.name}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="company" class="form-label col-sm-3">Company</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="company" value="{{editRecord.company}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="platform" class="form-label col-sm-3">Platform</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="platform" value="{{editRecord.platform}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="platformURL" class="form-label col-sm-3">Profile URL</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="platformURL" value="{{editRecord.platformURL}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="email" class="form-label col-sm-3">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control bg-white" id="email" value="{{editRecord.email}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="priority" class="form-label col-sm-3">Priority</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="priority" value="{{editRecord.priority}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="notes" class="form-label col-sm-3">Notes</label>
+                            <div class="col-sm-9">
+                                <textarea type="text" class="form-control bg-white" id="notes" value="{{editRecord.notes}}"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- infoModal -->
+    <div class="modal fade" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="infoModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Contact Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/" method="get">
+                        <div class="row mb-3">
+                            <label for="name" class="form-label col-sm-3">Name</label>
+                            <div class="col-sm-9">
+                                {{infoRecord.name}}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="company" class="form-label col-sm-3">Company</label>
+                            <div class="col-sm-9">
+                                {{infoRecord.company}}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="platform" class="form-label col-sm-3">Platform</label>
+                            <div class="col-sm-9">
+                                {{infoRecord.platform}}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="platformURL" class="form-label col-sm-3">Profile URL</label>
+                            <div class="col-sm-9">
+                                <a href="{{infoRecord.platformURL}}">{{infoRecord.platform}}</a>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="email" class="form-label col-sm-3">Email</label>
+                            <div class="col-sm-9">
+                                <a href="mailto:{{infoRecord.email}}">{{infoRecord.email}}</a>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="priority" class="form-label col-sm-3">Priority</label>
+                            <div class="col-sm-9">
+                                {{infoRecord.priority}}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="notes" class="form-label col-sm-3">Notes</label>
+                            <div class="col-sm-9">
+                                {{infoRecord.notes}}
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- newModal -->
+    <div class="modal fade" id="newModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="newModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newModalLabel">Edit Contact</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/" method="get">
+                        <div class="row mb-3">
+                            <label for="name" class="form-label col-sm-3">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="name" value="{{newRecord.name}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="company" class="form-label col-sm-3">Company</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="company" value="{{newRecord.company}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="platform" class="form-label col-sm-3">Platform</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="platform" value="{{newRecord.platform}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="platformURL" class="form-label col-sm-3">Profile URL</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="platformURL" value="{{newRecord.platformURL}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="priority" class="form-label col-sm-3">Priority</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="priority" value="{{newRecord.priority}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="notes" class="form-label col-sm-3">Notes</label>
+                            <div class="col-sm-9">
+                                <textarea type="text" class="form-control bg-white" id="notes" value="{{newRecord.notes}}"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

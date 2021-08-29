@@ -1,0 +1,34 @@
+﻿
+
+<!DOCTYPE html>
+<html ng-app="LinkedInNetworkApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/dragula.css" rel="stylesheet" />
+    <link href="~/Content/all.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="~/Scripts/angularjs-dragula.min.js"></script>
+    <script src="~/Scripts/all.js"></script>
+</head>
+<body>
+    <div class="container">@Html.Partial("_NavBar")</div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Etudie Applications</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
