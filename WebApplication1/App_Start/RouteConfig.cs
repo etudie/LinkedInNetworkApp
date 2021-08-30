@@ -34,6 +34,11 @@ namespace WebApplication1
                 url: "main",
                 defaults: new { controller = "Main", action = "Index" }
             );
+            routes.MapRoute(
+                name: "Test",
+                url: "{controller}/{action}",
+                defaults: new { controller = "Test", action = "Index" }
+            );
         }
     }
 }

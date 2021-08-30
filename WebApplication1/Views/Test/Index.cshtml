@@ -1,58 +1,61 @@
 ﻿@model List<WebApplication1.Models.Main>
 @{
-    ViewBag.Title = "Main";
+    //****** TEST PAGE ********
+    ViewBag.Title = "Test";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] stages = { "Prospect", "Outreach", "Waiting", "Respond", "Cold" };
 
-    foreach(var record in Model) { 
-
-    }
+    
 }
 <script src="~/Scripts/Index.js"></script>
 
 <div class="container" ng-controller="kanbanController" ng-cloak>
     <div class="row">
-        @foreach (var record in Model)
-        {
-            string cardColor = "";
-            string textDarkLight = "white";
-            switch (record.stage)
-            {
-                case "Prospect":
-                    cardColor = "info";
-                    break;
-                case "Outreach":
-                    cardColor = "primary";
-                    break;
-                case "Waiting":
-                    cardColor = "dark";
-                    break;
-                case "Respond":
-                    cardColor = "success";
-                    break;
-                case "Cold":
-                    cardColor = "secondary";
-                    break;
+        @foreach(var stage in stages) { 
+            <div class="col m-3 bg-light card" id="@stage" dragula="'records-bag'">
+                <h3 class="text-dark no-drag">@stage</h3>
+                @foreach(var record in Model){
+                    string cardColor = "";
+                    string textDarkLight = "white";
+                    switch (record.stage)
+                    {
+                        case "Prospect":
+                            cardColor = "info";
+                            break;
+                        case "Outreach":
+                            cardColor = "primary";
+                            break;
+                        case "Waiting":
+                            cardColor = "dark";
+                            break;
+                        case "Respond":
+                            cardColor = "success";
+                            break;
+                        case "Cold":
+                            cardColor = "secondary";
+                            break;
 
-            }
-            <div class="col m-3 bg-light card" id="@record.stage" dragula="'records-bag'">
-                <h3 class="text-dark no-drag">@record.stage</h3>
-                <div class="card text-@textDarkLight bg-@cardColor mb-1 p-0">
-                    <div class="card-header bg-@cardColor m-0 p-0 text-center">
-                        <a title="Profile URL - @record.platform" href="@record.platformURL" class="btn text-white" style="font-size:smaller" target="_blank"><i class="fas fa-link"></i></a>
-                        <a class="btn text-white" style="font-size:smaller" title="details" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="info(@record.id)"><i class="fas fa-info-circle"></i></a>
-                        <a class="btn text-white" title="edit" data-bs-toggle="modal" data-bs-target="#editModal" ng-click="edit(@record.id)"><i class="fas fa-pen"></i></a>
+                    }
+                    if(stage == record.stage) { 
+                    <div class="card text-@textDarkLight bg-@cardColor mb-1 p-0">
+                        <div class="card-header bg-@cardColor m-0 p-0 text-center">
+                            <a title="Profile URL - @record.platform" href="@record.platformURL" class="btn text-white" style="font-size:smaller" target="_blank"><i class="fas fa-link"></i></a>
+                            <a class="btn text-white" style="font-size:smaller" title="details" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="info(@record.id)"><i class="fas fa-info-circle"></i></a>
+                            <a class="btn text-white" title="edit" data-bs-toggle="modal" data-bs-target="#editModal" ng-click="edit(@record.id)"><i class="fas fa-pen"></i></a>
+                            <a href="@Url.Action("CreateRecord", ViewBag.title)">create</a>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="h5 card-title">@record.name</div>
+                            <p class="card-subtitle">@record.company</p>
+                            <p class="card-text">
+                            </p>
+                        </div>
                     </div>
-                    <div class="card-body p-2">
-                        <div class="h5 card-title">@record.name</div>
-                        <p class="card-subtitle">@record.company</p>
-                        <p class="card-text">
-                        </p>
-                    </div>
-                </div>
+                    }
+                  }
             </div>
-        }
-     </div>
+          }
+    </div>
     <!-- editModal -->
     <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
         <div class="modal-dialog">
@@ -232,4 +235,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
+
+
+
