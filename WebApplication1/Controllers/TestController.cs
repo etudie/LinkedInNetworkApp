@@ -61,14 +61,15 @@ namespace WebApplication1.Controllers
             con.Close();
         }
 
-        public void CreateRecord()
+        [HttpPost]
+        public void CreateRecord(string name)
         {
             //string name, string company, string stage, string platform, string platformURL, string email, string lastContacted, string firstContacted, string priority, string iduser
             con.Open();
             try
             {
                 string sql = "INSERT INTO records(id, name, company, stage, platform, platformURL, email, lastContacted, firstContacted, priority, iduser)" +
-                            "VALUES('','James Dean','Music','Outreach','LinkedIn','https://linkedin.com/','something@snapchat.com','2021-07-02','2021-07-01','3','1')";
+                            $"VALUES('','{name}','Hogwarts','Respond','LinkedIn','https://linkedin.com/','something@hogwarts.com','2021-07-02','2021-07-01','1','1')";
                 MySqlCommand cmd = new MySqlCommand(sql, con);
                 cmd.ExecuteNonQuery();
             }

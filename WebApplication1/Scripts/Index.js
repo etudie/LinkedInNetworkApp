@@ -135,7 +135,23 @@ $(document).ready(function () {
     $('#myModal').on('shown.bs.modal', function () {
         $('#myInput').focus()
     })
+
 });
+
+function createRecord(name) {
+    $.ajax({
+        url: '/test/CreateRecord',
+        type: 'POST',
+        dataType: 'json',
+        cache: false,
+        data: {
+            name:name
+        },
+        success: function (person) {
+            //When Succeeded, update view
+        }
+    });
+}
 
 
 //$(document).ready(function () {
