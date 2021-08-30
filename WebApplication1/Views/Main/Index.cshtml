@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebApplication1.ViewModels.MainViewModel 
+@{
     ViewBag.Title = "Main";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] stages = { "Prospect", "Outreach", "Waiting", "Respond", "Cold" };
@@ -46,26 +47,10 @@
                             </p>
                         </div>
                     </div>
-                    <!--CONTROLLER WAY-->
-                    @{ foreach(}
-                    <div class="card text-@textDarkLight bg-@cardColor mb-1 p-0">
-                        <div class="card-header bg-@cardColor m-0 p-0 text-center">
-                            <a title="Profile URL - {{record.platform}}" href="{{record.platformURL}}" class="btn text-white" style="font-size:smaller" target="_blank"><i class="fas fa-link"></i></a>
-                            <a class="btn text-white" style="font-size:smaller" title="details" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="info(record)"><i class="fas fa-info-circle"></i></a>
-                            <a class="btn text-white" title="edit" data-bs-toggle="modal" data-bs-target="#editModal" ng-click="edit(record)"><i class="fas fa-pen"></i></a>
-                        </div>
-                        <div class="card-body p-2">
-                            <div class="h5 card-title">{{record.name}}</div>
-                            <p class="card-subtitle">{{record.company}}</p>
-                            <p class="card-text">
-                            </p>
-                        </div>
-                    </div>
-
                 </div>
+                }
             }
-        }
-    </div>
+     </div>
     <!-- editModal -->
     <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
         <div class="modal-dialog">

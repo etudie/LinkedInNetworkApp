@@ -7,17 +7,23 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Data;
 using WebApplication1.Models;
+using WebApplication1.ViewModels;
 
 namespace WebApplication1.Controllers
 {
     public class MainController : Controller
     {
         // GET: Main
+        Main[] record; 
         public ActionResult Index()
         {
             System.Diagnostics.Debug.WriteLine("Meow2"); 
-            BindData(); 
-            return View();
+            BindData();
+            var viewModel = new MainViewModel()
+            {
+                Main = record
+            };
+            return View(viewModel);
         }
         public void BindData()
         {
@@ -28,7 +34,7 @@ namespace WebApplication1.Controllers
             MySqlDataReader rdr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(rdr);
-            Main[] record = new Main[dt.Rows.Count];
+            record = new Main[dt.Rows.Count-1];
             int i = 0; 
             try
             {
