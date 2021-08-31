@@ -136,6 +136,20 @@ $(document).ready(function () {
         $('#myInput').focus()
     })
 
+    $('#newSaveButton').click(function () {
+        name = $('#newContactForm').find('#name').val();
+        company = $('#newContactForm').find('#company').val();
+        stage = $('#newContactForm').find('#stage').val();
+        platform = $('#newContactForm').find('#platform').val();
+        platformURL = $('#newContactForm').find('#platformURL').val();
+        email = $('#newContactForm').find('#email').val();
+        lastContacted = $('#newContactForm').find('#lastContacted').val();
+        firstContacted = $('#newContactForm').find('#firstContacted').val();
+        priority = $('#newContactForm').find('#priority').val();
+        iduser = $('#newContactForm').find('#iduser').val();
+        createRecord(name, company, stage, platform, platformURL, email, lastContacted, firstContacted, priority, iduser);
+    });
+
 });
 
 function createRecord(name) {
@@ -145,10 +159,23 @@ function createRecord(name) {
         dataType: 'json',
         cache: false,
         data: {
-            name:name
+            name: name,
+            company: company,
+            stage: stage,
+            platform: platform,
+            platformURL: platformURL,
+            email: email,
+            lastContacted: lastContacted,
+            firstContacted: firstContacted,
+            priority: priority,
+            iduser: iduser
         },
-        success: function (person) {
-            //When Succeeded, update view
+        success: function () {
+            $('#newModal').modal('hide');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Status: " + textStatus);
+            alert("Error: " + errorThrown);
         }
     });
 }

@@ -4,55 +4,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] stages = { "Prospect", "Outreach", "Waiting", "Respond", "Cold" };
 
-    foreach(var record in Model) { 
-
-    }
 }
 <script src="~/Scripts/Index.js"></script>
 
 <div class="container" ng-controller="kanbanController" ng-cloak>
     <div class="row">
-        @foreach (var record in Model)
+        @foreach (var stage in stages)
         {
-            string cardColor = "";
-            string textDarkLight = "white";
-            switch (record.stage)
-            {
-                case "Prospect":
-                    cardColor = "info";
-                    break;
-                case "Outreach":
-                    cardColor = "primary";
-                    break;
-                case "Waiting":
-                    cardColor = "dark";
-                    break;
-                case "Respond":
-                    cardColor = "success";
-                    break;
-                case "Cold":
-                    cardColor = "secondary";
-                    break;
+            <div class="col m-3 bg-light card" id="@stage" dragula="'records-bag'">
+                <h3 class="text-dark no-drag">@stage</h3>
+                @foreach (var record in Model)
+                {
+                    string cardColor = "";
+                    string textDarkLight = "white";
+                    switch (record.stage)
+                    {
+                        case "Prospect":
+                            cardColor = "info";
+                            break;
+                        case "Outreach":
+                            cardColor = "primary";
+                            break;
+                        case "Waiting":
+                            cardColor = "dark";
+                            break;
+                        case "Respond":
+                            cardColor = "success";
+                            break;
+                        case "Cold":
+                            cardColor = "secondary";
+                            break;
 
-            }
-            <div class="col m-3 bg-light card" id="@record.stage" dragula="'records-bag'">
-                <h3 class="text-dark no-drag">@record.stage</h3>
-                <div class="card text-@textDarkLight bg-@cardColor mb-1 p-0">
-                    <div class="card-header bg-@cardColor m-0 p-0 text-center">
-                        <a title="Profile URL - @record.platform" href="@record.platformURL" class="btn text-white" style="font-size:smaller" target="_blank"><i class="fas fa-link"></i></a>
-                        <a class="btn text-white" style="font-size:smaller" title="details" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="info(@record.id)"><i class="fas fa-info-circle"></i></a>
-                        <a class="btn text-white" title="edit" data-bs-toggle="modal" data-bs-target="#editModal" ng-click="edit(@record.id)"><i class="fas fa-pen"></i></a>
-                    </div>
-                    <div class="card-body p-2">
-                        <div class="h5 card-title">@record.name</div>
-                        <p class="card-subtitle">@record.company</p>
-                        <p class="card-text">
-                        </p>
-                    </div>
-                </div>
+                    }
+                    if (stage == record.stage)
+                    {
+                        <div class="card text-@textDarkLight bg-@cardColor mb-1 p-0">
+                            <div class="card-header bg-@cardColor m-0 p-0 text-center">
+                                <a title="Profile URL - @record.platform" href="@record.platformURL" class="btn text-white" style="font-size:smaller" target="_blank"><i class="fas fa-link"></i></a>
+                                <a class="btn text-white" style="font-size:smaller" title="details" data-bs-toggle="modal" data-bs-target="#infoModal" ng-click="info(@record.id)"><i class="fas fa-info-circle"></i></a>
+                                <a class="btn text-white" title="edit" data-bs-toggle="modal" data-bs-target="#editModal" ng-click="edit(@record.id)"><i class="fas fa-pen"></i></a>
+                                <button onclick="createRecord('Ronald Weasley')">Create</button>
+                            </div>
+                            <div class="card-body p-2">
+                                <div class="h5 card-title">@record.name</div>
+                                <p class="card-subtitle">@record.company</p>
+                                <p class="card-text">
+                                </p>
+                            </div>
+                        </div>
+                    }
+                }
             </div>
         }
-     </div>
+    </div>
     <!-- editModal -->
     <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
         <div class="modal-dialog">
@@ -181,45 +185,75 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newModalLabel">Edit Contact</h5>
+                    <h5 class="modal-title" id="newModalLabel">Create New Contact</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/" method="get">
+                    <form action="/" method="get" id="newContactForm">
                         <div class="row mb-3">
                             <label for="name" class="form-label col-sm-3">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="name" value="{{newRecord.name}}">
+                                <input type="text" class="form-control bg-white" id="name">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="company" class="form-label col-sm-3">Company</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="company" value="{{newRecord.company}}">
+                                <input type="text" class="form-control bg-white" id="company">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="stage" class="form-label col-sm-3">Stage</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="stage" value="Prospect">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="platform" class="form-label col-sm-3">Platform</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="platform" value="{{newRecord.platform}}">
+                                <input type="text" class="form-control bg-white" id="platform">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="platformURL" class="form-label col-sm-3">Profile URL</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="platformURL" value="{{newRecord.platformURL}}">
+                                <input type="text" class="form-control bg-white" id="platformURL">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="email" class="form-label col-sm-3">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="lastContacted" class="form-label col-sm-3">Last Contacted</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="lastContacted" value="2021-08-01">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="firstContacted" class="form-label col-sm-3">First Contacted</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="firstContacted" value="2021-06-01">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="priority" class="form-label col-sm-3">Priority</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="priority" value="{{newRecord.priority}}">
+                                <input type="text" class="form-control bg-white" id="priority">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="iduser" class="form-label col-sm-3">iduser</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="iduser" value="1">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="notes" class="form-label col-sm-3">Notes</label>
                             <div class="col-sm-9">
-                                <textarea type="text" class="form-control bg-white" id="notes" value="{{newRecord.notes}}"></textarea>
+                                <textarea type="text" class="form-control bg-white" id="notes"></textarea>
                             </div>
                         </div>
 
@@ -227,9 +261,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="newSaveButton">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+</div>

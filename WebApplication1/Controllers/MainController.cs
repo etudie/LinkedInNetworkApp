@@ -15,6 +15,7 @@ namespace WebApplication1.Controllers
     {
         // GET: Main
         List<Main> record;
+        MySqlConnection con = new MySqlConnection("server=localhost; user id=root; password=; database=connectionstrackerapp;SslMode=none");
         public ActionResult Index()
         {
             BindData();
@@ -22,7 +23,6 @@ namespace WebApplication1.Controllers
         }
         public void BindData()
         {
-            MySqlConnection con = new MySqlConnection("server=localhost; user id=root; password=; database=connectionstrackerapp;SslMode=none");
             con.Open();
             // TODO: Update iduser to reflect current user
             string sql = "SELECT * FROM records WHERE iduser = 1";
@@ -30,13 +30,14 @@ namespace WebApplication1.Controllers
             MySqlDataReader rdr = cmd.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(rdr);
-            record = new List<Main> (); 
+            record = new List<Main>();
             try
             {
                 System.Diagnostics.Debug.WriteLine("STARTING DATABIND");
                 foreach (DataRow row in dt.Rows)
-                {   
-                    record.Add(new Main() {
+                {
+                    record.Add(new Main()
+                    {
                         id = (int)row["id"],
                         name = (string)row["name"],
                         company = (string)row["company"],
@@ -52,12 +53,34 @@ namespace WebApplication1.Controllers
                 }
                 System.Diagnostics.Debug.WriteLine("SUCCESSFUL DATABIND");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("ERROR IN DATABIND");
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
             con.Close();
+        }
+
+        [HttpPost]
+        public String CreateRecord(string name, string company, string stage, string platform, string platformURL, string email, string lastContacted, string firstContacted, int priority, int iduser)
+        {
+            con.Open();
+            try
+            {
+                // DEFAULT VALUES
+                iduser = 1;
+                string sql = "INSERT INTO records(id, name, company, stage, platform, platformURL, email, lastContacted, firstContacted, priority, iduser)" +
+                            $"VALUES('','{name}','{company}','{stage}','{platform}','{platformURL}','{email}','{lastContacted}','{firstContacted}',{priority},{iduser})";
+                MySqlCommand cmd = new MySqlCommand(sql, con);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("ERROR IN CREATERECORD");
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
+            con.Close();
+            return "{}";
         }
     }
 }

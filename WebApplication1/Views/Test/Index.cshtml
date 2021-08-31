@@ -184,45 +184,75 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="newModalLabel">Edit Contact</h5>
+                    <h5 class="modal-title" id="newModalLabel">Create New Contact</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/" method="get">
+                    <form action="/" method="get" id="newContactForm">
                         <div class="row mb-3">
                             <label for="name" class="form-label col-sm-3">Name</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="name" value="{{newRecord.name}}">
+                                <input type="text" class="form-control bg-white" id="name">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="company" class="form-label col-sm-3">Company</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="company" value="{{newRecord.company}}">
+                                <input type="text" class="form-control bg-white" id="company">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="stage" class="form-label col-sm-3">Stage</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="stage" value="Prospect">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="platform" class="form-label col-sm-3">Platform</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="platform" value="{{newRecord.platform}}">
+                                <input type="text" class="form-control bg-white" id="platform">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="platformURL" class="form-label col-sm-3">Profile URL</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="platformURL" value="{{newRecord.platformURL}}">
+                                <input type="text" class="form-control bg-white" id="platformURL">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="email" class="form-label col-sm-3">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="lastContacted" class="form-label col-sm-3">Last Contacted</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="lastContacted" value="2021-08-01">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="firstContacted" class="form-label col-sm-3">First Contacted</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="firstContacted" value="2021-06-01">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="priority" class="form-label col-sm-3">Priority</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-white" id="priority" value="{{newRecord.priority}}">
+                                <input type="text" class="form-control bg-white" id="priority">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="iduser" class="form-label col-sm-3">iduser</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-white" id="iduser" value="1">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="notes" class="form-label col-sm-3">Notes</label>
                             <div class="col-sm-9">
-                                <textarea type="text" class="form-control bg-white" id="notes" value="{{newRecord.notes}}"></textarea>
+                                <textarea type="text" class="form-control bg-white" id="notes"></textarea>
                             </div>
                         </div>
 
@@ -230,7 +260,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="newSaveButton">Save changes</button>
                 </div>
             </div>
         </div>

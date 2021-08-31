@@ -62,14 +62,15 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public void CreateRecord(string name)
+        public String CreateRecord(string name, string company, string stage, string platform, string platformURL, string email, string lastContacted, string firstContacted, int priority, int iduser)
         {
-            //string name, string company, string stage, string platform, string platformURL, string email, string lastContacted, string firstContacted, string priority, string iduser
             con.Open();
             try
             {
+                // DEFAULT VALUES
+                iduser = 1;
                 string sql = "INSERT INTO records(id, name, company, stage, platform, platformURL, email, lastContacted, firstContacted, priority, iduser)" +
-                            $"VALUES('','{name}','Hogwarts','Respond','LinkedIn','https://linkedin.com/','something@hogwarts.com','2021-07-02','2021-07-01','1','1')";
+                            $"VALUES('','{name}','{company}','{stage}','{platform}','{platformURL}','{email}','{lastContacted}','{firstContacted}',{priority},{iduser})";
                 MySqlCommand cmd = new MySqlCommand(sql, con);
                 cmd.ExecuteNonQuery();
             }
@@ -79,6 +80,7 @@ namespace WebApplication1.Controllers
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
             con.Close();
+            return "{}";
         }
     }
 }
