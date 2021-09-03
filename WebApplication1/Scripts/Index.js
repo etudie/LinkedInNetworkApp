@@ -150,6 +150,14 @@ $(document).ready(function () {
         createRecord(name, company, stage, platform, platformURL, email, lastContacted, firstContacted, priority, iduser);
     });
 
+
+    $('#editButton').click(function () {
+        console.log("pressed edit button");
+        id = 1;
+        iduser = 1;
+        readRecord(id, iduser);
+    });
+
 });
 
 function createRecord(name) {
@@ -172,6 +180,26 @@ function createRecord(name) {
         },
         success: function () {
             $('#newModal').modal('hide');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Status: " + textStatus);
+            alert("Error: " + errorThrown);
+        }
+    });
+}
+
+function readRecord(id, iduser) {
+    $.ajax({
+        url: '/test/ReadRecord/',
+        type: 'GET',
+        dataType: 'json',
+        cache: false,
+        data: {
+            id: id,
+            iduser: iduser
+        },
+        success: function (data) {
+            console.log(data);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert("Status: " + textStatus);
